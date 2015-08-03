@@ -1,0 +1,8 @@
+#
+# Documentation is here: http://git-scm.com/docs/gitignore
+#
+wp-config.php
+
+/nbproject/
+*.swp
+
