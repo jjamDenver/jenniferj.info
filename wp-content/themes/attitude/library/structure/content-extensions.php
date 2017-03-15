@@ -17,8 +17,8 @@ add_action( 'attitude_main_container', 'attitude_content', 10 );
  */
 function attitude_content() {
 	global $post;	
-	global $attitude_theme_options_settings;
-	$options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 	if( $post ) {
 		$layout = get_post_meta( $post->ID, 'attitude_sidebarlayout', true );
 	}
@@ -125,7 +125,7 @@ function attitude_theloop_for_archive() {
 			<?php
 			if( has_post_thumbnail() ) {
 				$image = '';        			
-	     		$title_attribute = apply_filters( 'the_title', get_the_title( $post->ID ) );
+	     		$title_attribute = the_title_attribute( array( 'echo' => false ) );
 	     		$image .= '<figure class="post-featured-image">';
 	  			$image .= '<a href="' . get_permalink() . '" title="'.the_title( '', '', false ).'">';
 	  			$image .= get_the_post_thumbnail( $post->ID, 'featured', array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $title_attribute ) ) ).'</a>';
@@ -134,6 +134,7 @@ function attitude_theloop_for_archive() {
 	  			echo $image;
 	  		}
   			?>
+            <?php if (has_category() !=''){?>
   			<div class="entry-content clearfix">
     			<?php the_excerpt(); ?>
   			</div>
@@ -157,7 +158,9 @@ function attitude_theloop_for_archive() {
     			echo '<a class="readmore" href="' . get_permalink() . '" title="'.the_title( '', '', false ).'">'.__( 'Read more', 'attitude' ).'</a>';
     			?>
     		</div>
-
+			<?php } else{
+			the_content();	
+				} ?>
     		<?php do_action( 'attitude_after_post_meta' ); ?>
 
 		</article>
@@ -169,7 +172,7 @@ function attitude_theloop_for_archive() {
 	}
 	else {
 		?>
-		<h1 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h1>
+		<h2 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h2>
       <?php
    }
 }
@@ -196,9 +199,9 @@ function attitude_theloop_for_page() {
 			<?php do_action( 'attitude_before_post_header' ); ?>
 
 			<header class="entry-header">
-    			<h2 class="entry-title">
+    			<h1 class="entry-title">
     				<?php the_title(); ?>
-    			</h2><!-- .entry-title -->
+    			</h1><!-- .entry-title -->
   			</header>
 
   			<?php do_action( 'attitude_after_post_header' ); ?>
@@ -267,9 +270,9 @@ function attitude_theloop_for_single() {
 			<?php do_action( 'attitude_before_post_header' ); ?>
 
 			<header class="entry-header">
-    			<h2 class="entry-title">
+    			<h1 class="entry-title">
     				<?php the_title(); ?>
-    			</h2><!-- .entry-title -->
+    			</h1><!-- .entry-title -->
   			</header>
 
   			<?php do_action( 'attitude_after_post_header' ); ?>
@@ -302,7 +305,7 @@ function attitude_theloop_for_single() {
                ) );
                ?>
   			</div>
-
+<?php if(get_the_time( get_option( 'date_format' ) )) { ?>
   			<div class="entry-meta-bar clearfix">	        			
     			<div class="entry-meta">
     				<span class="by-author"><?php _e( 'By', 'attitude' ); ?> <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a></span> |
@@ -319,7 +322,7 @@ function attitude_theloop_for_single() {
   			<?php 
 
   			do_action( 'attitude_after_post_content' );
-
+			 }
   			do_action( 'attitude_before_comments_template' ); 
 
          comments_template(); 
@@ -388,7 +391,7 @@ function attitude_theloop_for_search() {
 	}
 	else {
 		?>
-		<h1 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h1>
+		<h2 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h2>
       <?php
    }
 }
@@ -499,7 +502,7 @@ function attitude_theloop_for_template_blog_image_large() {
 	}
 	else {
 		?>
-		<h1 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h1>
+		<h2 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h2>
       <?php
    }
    $wp_query = $temp_query;
@@ -612,7 +615,7 @@ function attitude_theloop_for_template_blog_image_medium() {
 	}
 	else {
 		?>
-		<h1 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h1>
+		<h2 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h2>
       <?php
    }
    $wp_query = $temp_query;
@@ -724,7 +727,7 @@ function attitude_theloop_for_template_blog_full_content() {
 	}
 	else {
 		?>
-		<h1 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h1>
+		<h2 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h2>
       <?php
    }
    $wp_query = $temp_query;
@@ -913,7 +916,7 @@ function attitude_display_contact_page_template_content() {
 			}
 			else {
 				?>
-				<h1 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h1>
+				<h2 class="entry-title"><?php _e( 'No Posts Found.', 'attitude' ); ?></h2>
 		      <?php
 		   }
 		   ?>
@@ -936,7 +939,7 @@ function attitude_display_404_page_content() {
 ?>
 	<div id="content">
 		<header class="entry-header">
-			<h1 class="entry-title"><?php _e( 'Error 404-Page NOT Found', 'attitude' ); ?></a></h1>
+			<h2 class="entry-title"><?php _e( 'Error 404-Page NOT Found', 'attitude' ); ?></a></h2>
 		</header>
 		<div class="entry-content clearfix" >
 			<p><?php _e( 'It seems we can\'t find what you\'re looking for.', 'attitude' ); ?></p>

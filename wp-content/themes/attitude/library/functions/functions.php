@@ -18,8 +18,8 @@ add_action( 'wp_enqueue_scripts', 'attitude_scripts_styles_method' );
  */
 function attitude_scripts_styles_method() {
 
-	global $attitude_theme_options_settings;
-   $options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 
    /**
 	 * Loads our main stylesheet.
@@ -39,19 +39,28 @@ function attitude_scripts_styles_method() {
 	 */
 	wp_register_script( 'jquery_cycle', ATTITUDE_JS_URL . '/jquery.cycle.all.min.js', array( 'jquery' ), '2.9999.5', true );
 
-   wp_register_style( 'google_fonts', 'http://fonts.googleapis.com/css?family=PT+Sans|Philosopher' );    
+   wp_register_style( 'google_fonts', '//fonts.googleapis.com/css?family=PT+Sans|Philosopher' );    
 	
 	/**
 	 * Enqueue Slider setup js file.
 	 * Enqueue Fancy Box setup js and css file.	 
 	 */	
-	if( ( is_home() || is_front_page() ) && "0" == $options[ 'disable_slider' ] ) {
+	if( ( is_home() || is_front_page() ) && 0 == $options[ 'disable_slider' ] ) {
 		wp_enqueue_script( 'attitude_slider', ATTITUDE_JS_URL . '/attitude-slider-setting.js', array( 'jquery_cycle' ), false, true );
 	}
    wp_enqueue_script( 'tinynav', ATTITUDE_JS_URL . '/tinynav.js', array( 'jquery' ) );
    wp_enqueue_script( 'backtotop', ATTITUDE_JS_URL. '/backtotop.js', array( 'jquery' ) );
 
    wp_enqueue_style( 'google_fonts' );
+   /****************************************************************************************/
+
+function attitude_add_editor_styles() {
+	$font_url = str_replace( ',', '%2C', '//fonts.googleapis.com/css?family=PT+Sans:400,700italic,700,400italic' );
+	add_editor_style( $font_url );
+}
+add_action( 'after_setup_theme', 'attitude_add_editor_styles' );
+
+/****************************************************************************************/
 
    /**
     * Browser specific queuing i.e
@@ -87,8 +96,8 @@ if ( ! function_exists( 'attitude_pass_cycle_parameters' ) ) :
  */
 function attitude_pass_cycle_parameters() {
     
-    global $attitude_theme_options_settings;
-    $options = $attitude_theme_options_settings;
+   global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 
     $transition_effect = $options[ 'transition_effect' ];
     $transition_delay = $options[ 'transition_delay' ] * 1000;
@@ -138,8 +147,8 @@ add_filter( 'body_class', 'attitude_body_class' );
  */
 function attitude_body_class( $classes ) {
 	global $post;	
-	global $attitude_theme_options_settings;
-	$options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 
 	if( $post ) {
 		$layout = get_post_meta( $post->ID,'attitude_sidebarlayout', true ); 
@@ -200,11 +209,10 @@ add_action('wp_head', 'attitude_internal_css');
  * Hooks the Custom Internal CSS to head section
  */
 function attitude_internal_css() { 
+	$attitude_internal_css = '';
 
-	if ( ( !$attitude_internal_css = get_transient( 'attitude_internal_css' ) ) ) {
-
-		global $attitude_theme_options_settings;
-		$options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 
 		if( !empty( $options[ 'custom_css' ] ) ) {
 			$attitude_internal_css = '<!-- '.get_bloginfo('name').' Custom CSS Styles -->' . "\n";
@@ -212,9 +220,6 @@ function attitude_internal_css() {
 			$attitude_internal_css .=  $options['custom_css'] . "\n";
 			$attitude_internal_css .= '</style>' . "\n";
 		}
-
-		set_transient( 'attitude_internal_css', $attitude_internal_css, 86940 );
-	}
 	echo $attitude_internal_css;
 }
 
@@ -225,12 +230,10 @@ add_action('wp_head', 'attitude_verification');
  * Header Script Option
  *
  */ 
-function attitude_verification() {;    
-    
-	if ( ( !$attitude_verification = get_transient( 'attitude_verification' ) ) )  {
+function attitude_verification() {
 
-		global $attitude_theme_options_settings;
-		$options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 
 		$attitude_verification = '';
 
@@ -238,9 +241,6 @@ function attitude_verification() {;
 		if ( !empty( $options['analytic_header'] ) ) {
 		$attitude_verification .=  $options[ 'analytic_header' ] ;
 		}
-
-		set_transient( 'attitude_verification', $attitude_verification, 86940 );    
-	}
 	echo $attitude_verification;
 }
 
@@ -253,18 +253,14 @@ add_action('wp_footer', 'attitude_footercode');
 function attitude_footercode() { 
     
    $attitude_footercode = '';
-	if ( ( !$attitude_footercode = get_transient( 'attitude_footercode' ) )  ) {
 
-		global $attitude_theme_options_settings;
-		$options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 
 		// site stats, analytics footer code
 		if ( !empty( $options['analytic_footer'] ) ) {  
 		$attitude_footercode .=  $options[ 'analytic_footer' ] ;
 		}
-
-		set_transient( 'attitude_footercode', $attitude_footercode, 86940 );
-	}
 	echo $attitude_footercode;
 }
 
@@ -275,8 +271,8 @@ add_action('template_redirect', 'attitude_feed_redirect');
  * Redirect WordPress Feeds To FeedBurner
  */
 function attitude_feed_redirect() {
-	global $attitude_theme_options_settings;
-	$options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 
 	if ( !empty( $options['feed_url'] ) ) {
 		$url = 'Location: '.$options['feed_url'];
@@ -296,11 +292,11 @@ add_action( 'pre_get_posts','attitude_alter_home' );
  * @uses pre_get_posts hook
  */
 function attitude_alter_home( $query ){
-	global $attitude_theme_options_settings;
-	$options = $attitude_theme_options_settings;
+	global $options, $array_of_default_settings;
+	$options = wp_parse_args( get_option( 'attitude_theme_options', array() ), attitude_get_option_defaults());
 	$cats = $options[ 'front_page_category' ];
 
-	if ( $options[ 'exclude_slider_post'] != "0" && !empty( $options[ 'featured_post_slider' ] ) ) {
+	if ( $options[ 'exclude_slider_post'] != 0 && !empty( $options[ 'featured_post_slider' ] ) ) {
 		if( $query->is_main_query() && $query->is_home() ) {
 			$query->query_vars['post__not_in'] = $options[ 'featured_post_slider' ];
 		}
@@ -344,7 +340,7 @@ add_filter( 'wp_nav_menu_items', 'attitude_nav_menu_alter', 10, 2 );
 */
 if ( !function_exists('attitude_nav_menu_alter') ) {
 	function attitude_nav_menu_alter( $items, $args ) {
-		$items .= '<li class="default-menu"><a href="'.get_bloginfo('url').'" title="Navigation">'.__( 'Navigation','attitude' ).'</a></li>';
+		$items .= '<li class="default-menu"><a href="'.esc_url( home_url() ).'" title="Navigation">'.__( 'Navigation','attitude' ).'</a></li>';
 		return $items;
 	}
 }
@@ -358,7 +354,7 @@ add_filter( 'wp_list_pages', 'attitude_page_menu_alter' );
  */
 if ( !function_exists('attitude_page_menu_alter') ) {
 	function attitude_page_menu_alter( $output ) {
-		$output .= '<li class="default-menu"><a href="'.get_bloginfo('url').'" title="Navigation">'.__( 'Navigation','attitude' ).'</a></li>';
+		$output .= '<li class="default-menu"><a href="'.esc_url( home_url() ).'" title="Navigation">'.__( 'Navigation','attitude' ).'</a></li>';
 		return $output;
 	}
 }
@@ -381,5 +377,17 @@ if ( !function_exists('attitude_wp_page_menu_filter') ) {
 }
 
 /**************************************************************************************/
+
+add_action( 'admin_print_scripts', 'attitude_media_js' );
+/**
+ * Register scripts for image upload
+ *
+ * @uses wp_register_script
+ * Hooked to admin_print_scripts action hook
+ */
+function attitude_media_js() {
+    wp_enqueue_script( 'attitude_meta_upload_widget', ATTITUDE_ADMIN_JS_URL . '/add-image-script-widget.js', array( 'jquery','media-upload','thickbox' ) );
+    wp_enqueue_media();
+}
 
 ?>

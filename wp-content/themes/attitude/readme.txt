@@ -1,15 +1,5 @@
 === Attitude ===
-Theme Name: Attitude
-Theme URI: http://themehorse.com/themes/attitude
-Author: Team Horse
-Author URI: http://themehorse.com
-Description: Attitude is a Simple, Clean and Responsive Retina Ready WordPress Theme which adapts automatically to your tablets and mobile devices. Theme is easily customizable with numerous theme options. Some of the highlighted options are two site layout (Narrow and Wide), 5 layouts for every post/page, 5 Page Templates, 5 widget areas, 4 custom widgets, featured slider to highlight your post/page, 11 social icons and many more. Also has custom background, header, menu, favicon, CSS, webclip icon, and logo. Supports popular plugins like Breadcrumb NavXT, WP-PageNavi and Contact Form 7. It is also translation ready. Available Translation: Traditional Chinese (Taiwan), Spanish, Norwegian (Nynorsk), German, Russian, Dutch and Italian. Get free support on http://themehorse.com/support-forum/
-Version: 1.2.6
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: white, light, blue, one-column, two-columns, three-columns, left-sidebar, right-sidebar, flexible-width, custom-menu, custom-background, custom-header, featured-images, full-width-template, theme-options, threaded-comments, translation-ready, sticky-post
-Text Domain: attitude
-
+Attitude is a Simple, Clean and Responsive Retina Ready WordPress Theme which adapts automatically to your tablets and mobile devices. Theme is easily customizable with numerous theme options via Customize. Some of the highlighted options are two site layout (Narrow and Wide), 5 layouts for every post/page, 5 Page Templates, 5 widget areas, 4 custom widgets, featured slider to highlight your post/page, 11 social icons and many more. Also has custom background, header, menu, favicon, CSS, webclip icon, and logo. Supports popular plugins like Breadcrumb NavXT, WP-PageNavi and Contact Form 7. It is also translation ready. Available Translation: Traditional Chinese (Taiwan), Spanish, Norwegian (Nynorsk), German, Russian, Dutch, Italian and Danish. Get free support on http://themehorse.com/support-forum/
 
 == Installation ==
 
@@ -29,15 +19,8 @@ are licensed under GNU General Public License version 2, see file license.txt.
 The exceptions to this license are as follows:
 * The script html5.js is licensed under MIT
 * The script jquery.cycle.all.js is dual licensed under GPL & MIT
-* The script jquery.fancybox-1.3.4.js is dual licensed under GPL & MIT
-* The script jquery.cookie.min.js is dual licensed under GPL & MIT
+* The script attitude_customizer.js and add-image-script-widget.js is themehorse own creation which is licensed under GPL & MIT
 * The social media icons are the theme's designer personal creations and are free for personal and commercial use.
-
-Some of the code is derivatived from below themes which is under GNU General Public License v2 or later:
-http://wordpress.org/themes/news
-http://wordpress.org/themes/graphene
-http://wordpress.org/themes/responsive
-http://wordpress.org/themes/simple-catch
 
 == Theme Notes ==
 About the theme in the following link.
@@ -85,98 +68,3 @@ NOTE:
 For more instruction you can visit the theme-instruction page of attitude at http://www.themehorse.com/theme-instruction/attitude/
 If you have still any other questions about the theme you can email at support@themehorse.com for free support.
 
-== Change Log ==
-= 1.2.6 =
-* Attitude now available in Dutch Language. Thanks to Elselien Dijkstra <elselien.dijkstra@gmail.com> for providing us with the translation files.
-* Theme Option design fixed with respect to new version of WordPress 3.8
-* Attitude now available in Italian Language. Thanks to Cesare Gilento <cesare.gilento@gmail.com> for providing us with the translation files.
-
-= 1.2.5 =
-* Attitude now available in Russian Language. Thanks to Kirill Belotserkovskiy <k.belotserkovskiy@gmail.com>  for providing us with the translation files.
-
-= 1.2.4 =
-* Attitude now available in German Language. Thanks to Giuseppe Costabile <costabile.giusi@gmail.com> for providing us with the translation files.
-
-= 1.2.3 =
-* Attitude now available in Norwegian (Nynorsk) Language. Thanks to Algot Kristoffer Peterson <algotp@gmail.com> for providing us with the translation files.
-
-= 1.2.2 =
-* Social links name made translation ready.
-* attitude.pot file updated.
-* Attitude now available in Spanish Language. Thanks to Joseba Garay <nireleku.com> for providing us with the translation files.
-* Copyright Information added.
-
-= 1.2.1 =
-* Attitude now available in traditional Chinese (Taiwan) Language. Thanks to FreedomKnight <j26733514@gmail.com> for providing us with the translation files.
-
-= 1.2 =
-* Site verification option removed.
-* Post/Page title link removed in single page/post view.
-* Featured Slider text content display issue fixed.
-
-= 1.1.9 =
-* Theme Option Panel Modified.
-* Business Template's Service Widget Clear issue fixed.
-* Drop down menu display issue fixed.
-* Select Option design/display issue fixed.
-* Attitude Pot file updated.
-
-= 1.1.8 =
-* Breadcrumb modified.
-* Combined two google fonts request into one request.
-
-= 1.1.7 =
-* Pagination issue fixed for blog templates.
-* Navigation menu issue fix for all devices.
-* Attitude pot file updated.
-
-= 1.1.6 =
-* Added option to disable header logo and text.
-* Support forum link added on theme option and theme description.
-
-= 1.1.5 =
-* Hook naming fixed.
-* JQuery issue fixed for dependency.
-
-= 1.1.4 =
-* Site title logo image responsiveness fix for all devices.
-* Display issue fixed for featured slider content for IE8.
-* Use of query_posts removed. 
-
-= 1.1.3 =
-* Slogan css error fixed.
-* Small change in comments.php file to adjust with single and plural comments part.
-* Theme Option panel's menu padding issue fixed.
-* POT file updated to add the missing stings.
-* Escaped the slogan data and link.
-* Site title logo image issue fixed.
-* Edit CSS for more link. 
-* Retina ready image fixed.
-
-= 1.1.2 =
-* Added new hover effect for social media icons.
-* Slogan/button css modified for flexibility according to text length.
-* CSS curve fixed for services icon.
-* Theme Option Panel modified.
-* Pot file updated.
-
-= 1.1.1 =
-* Previous/Next Navigation added for the Gallery Post Format.
-* Custom Post type for Gallery removed (along with all related files).
-* CSS update to remove the extra margin below the site description.
-* Changed screenshot image.
-* Changed theme description.
-
-= 1.1 =
-* Fixed layout per post/page.
-* Header Title below menu issue fixed.
-* Author Name changed from Team Horse to Theme Horse.
-* Fixed issue for the Background Change option.
-* Added Business Page Template.
-* Added Theme horse: Featured Widget, Theme horse: Services, Theme horse: Testimonial suitable to show on Business Page Sidebar of Business Page Template.
-* Fixed Layout related issues.
-* Screenshot Image change
-* POT file updated.
-
-= 1.0 =
-* Initial Release

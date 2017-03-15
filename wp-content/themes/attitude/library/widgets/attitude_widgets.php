@@ -42,8 +42,8 @@ function attitude_widgets_init() {
 		'description'   	=> __( 'Shows widgets on Business Page Template. Sutiable widget: Theme Horse: Featured widget, Theme Horse: Testimonial, Theme Horse: Services', 'attitude' ),
 		'before_widget' 	=> '<section id="%1$s" class="widget %2$s">',
 		'after_widget'  	=> '</section>',
-		'before_title'  	=> '<h1 class="widget-title">',
-		'after_title'   	=> '</h1>'
+		'before_title'  	=> '<h3 class="widget-title">',
+		'after_title'   	=> '</h3>'
 	) );
 
 	// Registering contact Page sidebar
@@ -73,6 +73,7 @@ function attitude_widgets_init() {
 	register_widget( "attitude_service_widget" );
 	register_widget( "attitude_recent_work_widget" );
 	register_widget( "attitude_Widget_Testimonial" );
+	register_widget( "attitude_promobox_widget" );
 	
 }
 
@@ -87,10 +88,10 @@ function attitude_widgets_init() {
  * $name, Name for this widget which appear on widget bar.
  */
 class attitude_custom_tag_widget extends WP_Widget {
-	function attitude_custom_tag_widget() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_custom-tagcloud', 'description' => __( 'Displays Custom Tag Cloud', 'attitude' ) );
 		$control_ops = array('width' => 200, 'height' => 250);
-		parent::WP_Widget( false, $name = __( 'Theme Horse: Custom Tag Cloud', 'attitude' ), $widget_ops, $control_ops );
+		parent::__construct( false, $name = __( 'Theme Horse: Custom Tag Cloud', 'attitude' ), $widget_ops, $control_ops );
 	}
 	
 	/** Displays the Widget in the front-end.
@@ -155,10 +156,10 @@ class attitude_custom_tag_widget extends WP_Widget {
  * i.e. Name, description and control options.
  */
  class attitude_service_widget extends WP_Widget {
- 	function attitude_service_widget() {
+ 	function __construct() {
  		$widget_ops = array( 'classname' => 'widget_service', 'description' => __( 'Display Services( Business Layout )', 'attitude' ) );
 		$control_ops = array( 'width' => 200, 'height' =>250 ); 
-		parent::WP_Widget( false, $name = __( 'Theme Horse: Services', 'attitude' ), $widget_ops, $control_ops);
+		parent::__construct( false, $name = __( 'Theme Horse: Services', 'attitude' ), $widget_ops, $control_ops);
  	}
 
  	function form( $instance ) {
@@ -234,7 +235,7 @@ class attitude_custom_tag_widget extends WP_Widget {
 								echo'<div class="service-icon">'.get_the_post_thumbnail( $post->ID, 'icon' ).'</div>';
 							}
 							?>
-							<h3 class="service-title"><?php echo $page_title; ?></h3>
+							<h3 class="service-title"><?php echo esc_attr($page_title); ?></h3>
 						</div><!-- .service-item -->
 						<article>
 							<?php the_excerpt(); ?>
@@ -259,10 +260,10 @@ class attitude_custom_tag_widget extends WP_Widget {
  * i.e. Name, description and control options.
  */
  class attitude_recent_work_widget extends WP_Widget {
- 	function attitude_recent_work_widget() {
+ 	function __construct() {
  		$widget_ops = array( 'classname' => 'widget_recent_work', 'description' => __( 'Use this widget to show recent work, portfolio or any pages as your wish ( Business Layout )', 'attitude' ) );
 		$control_ops = array( 'width' => 200, 'height' =>250 ); 
-		parent::WP_Widget( false, $name = __( 'Theme Horse: Featured Widget', 'attitude' ), $widget_ops, $control_ops);
+		parent::__construct( false, $name = __( 'Theme Horse: Featured Widget', 'attitude' ), $widget_ops, $control_ops);
  	}
 
  	function form( $instance ) {
@@ -351,7 +352,7 @@ class attitude_custom_tag_widget extends WP_Widget {
 							echo '<a title="'.get_the_title().'"href="'.get_permalink().'">'.get_the_post_thumbnail( $post->ID,'gallery').'</a>';				
 						}
 						?>
-						<h3 class="custom-gallery-title"><a href="<?php the_permalink(); ?>" title=""><?php echo $page_title; ?></a></h3>
+						<h3 class="custom-gallery-title"><a href="<?php the_permalink(); ?>" title=""><?php echo esc_attr($page_title); ?></a></h3>
 					</div><!-- .one-fourth -->			
 				<?php endwhile;
 		 		// Reset Post Data
@@ -369,10 +370,10 @@ class attitude_custom_tag_widget extends WP_Widget {
  */
 class attitude_Widget_Testimonial extends WP_Widget {
 
-	function attitude_Widget_Testimonial() {
+	function __construct() {
  		$widget_ops = array( 'classname' => 'widget_testimonial', 'description' => __( 'Display Testimonial( Business Layout )', 'attitude' ) );
 		$control_ops = array( 'width' => 200, 'height' =>250 ); 
-		parent::WP_Widget( false, $name = __( 'Theme Horse: Testimonial', 'attitude' ), $widget_ops, $control_ops);
+		parent::__construct( false, $name = __( 'Theme Horse: Testimonial', 'attitude' ), $widget_ops, $control_ops);
  	}
 
 	function widget( $args, $instance ) {
@@ -417,7 +418,7 @@ class attitude_Widget_Testimonial extends WP_Widget {
 		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:', 'attitude' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
 		<?php _e( 'Testimonial Description','attitude'); ?>
-		<textarea class="widefat" rows="8" cols="20" id="<?php echo $this->get_field_id('text'); ?>" name="<?php echo $this->get_field_name('text'); ?>"><?php echo $text; ?></textarea>
+		<textarea class="widefat" rows="8" cols="20" id="<?php echo $this->get_field_id('text'); ?>" name="<?php echo $this->get_field_name('text'); ?>"><?php echo esc_attr($text); ?></textarea>
 
 		<p><label for="<?php echo $this->get_field_id('name'); ?>"><?php _e( 'Name:', 'attitude' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('name'); ?>" name="<?php echo $this->get_field_name('name'); ?>" type="text" value="<?php echo esc_attr($name); ?>" /></p>
@@ -426,6 +427,86 @@ class attitude_Widget_Testimonial extends WP_Widget {
 		<input class="widefat" id="<?php echo $this->get_field_id('byline'); ?>" name="<?php echo $this->get_field_name('byline'); ?>" type="text" value="<?php echo esc_attr($byline); ?>" /></p>
 
 <?php
+	}
+}
+/**************************************************************************************/
+/**
+ * Widget for business layout to shows Promo Box.
+ * Construct the widget.
+ * i.e. Primay Promotional Box, Secondary Promotional Box, Redirect Button Text and Redirect Button Link
+ */
+class attitude_promobox_widget extends WP_Widget {
+	function __construct() {
+		$widget_ops  = array('classname' => 'widget_promotional_bar', 'description' => __('Display PromoBox ( Business Layout )', 'attitude'));
+		$control_ops = array('width'     => 200, 'height'     => 250);
+		parent::__construct(false, $name = __('Theme Horse: PromoBox', 'attitude'), $widget_ops, $control_ops);
+	}
+	function widget($args, $instance) {
+		extract($args);
+		$promotional_img_background = apply_filters( 'promotional_img_background', empty( $instance['promotional_img_background'] ) ? '' : $instance['promotional_img_background'], $instance,  $this->id_base );
+		$widget_primary   = apply_filters('widget_primary', empty($instance['widget_primary'])?'':$instance['widget_primary'], $instance, $this->id_base);
+		$widget_secondary = apply_filters('widget_secondary', empty($instance['widget_secondary'])?'':$instance['widget_secondary'], $instance, $this->id_base);
+		$redirect_text    = apply_filters('redirect_text', empty($instance['redirect_text'])?'':$instance['redirect_text'], $instance);
+		$widget_redirecturl = apply_filters('widget_redirecturl', empty($instance['widget_redirecturl'])?'':$instance['widget_redirecturl'], $instance, $this->id_base);
+		echo $before_widget; ?>
+		<div class="promotional_bar_content" <?php if(!empty($promotional_img_background)){ ?> style="background-image:url('<?php echo esc_url($promotional_img_background);?>');" <?php } ?> >
+		<?php
+			if (!empty($widget_primary)) {echo '<div class="promotional-text">'.esc_html($widget_primary);}?> <span> <?php echo esc_html($widget_secondary);
+			?> </span> <?php echo '</div><!-- .promotional-text -->';
+			?> <a class="call-to-action" href="<?php echo esc_html($widget_redirecturl);?>" title="<?php echo $redirect_text;?>"><?php echo esc_html($redirect_text);
+			?></a>
+		</div><!-- .promotional_bar_content -->
+		<?php
+		echo $after_widget;
+	}
+	function update($new_instance, $old_instance) {
+		$instance                       = $old_instance;
+		$instance['promotional_img_background']     = strip_tags($new_instance['promotional_img_background']);
+		$instance['widget_primary']     = esc_textarea($new_instance['widget_primary']);
+		$instance['widget_secondary']   = esc_textarea($new_instance['widget_secondary']);
+		$instance['widget_redirecturl'] = esc_url($new_instance['widget_redirecturl']);
+		$instance['redirect_text']      = strip_tags($new_instance['redirect_text']);
+		$instance['filter'] = isset($new_instance['filter']);
+		return $instance;
+	}
+	function form($instance) {
+		$instance           = wp_parse_args((array) $instance, array('promotional_img_background' => '','widget_primary' => '', 'widget_secondary' => '', 'redirect_text' => '', 'widget_redirecturl' => ''));
+		$promotional_img_background      = strip_tags($instance['promotional_img_background']);
+		$widget_primary     = esc_textarea($instance['widget_primary']);
+		$widget_secondary   = esc_textarea($instance['widget_secondary']);
+		$redirect_text      = strip_tags($instance['redirect_text']);
+		$widget_redirecturl = esc_url($instance['widget_redirecturl']);
+		?>
+			<p>
+				<label for="<?php echo $this->get_field_id('promotional_img_background');?>">
+						<?php _e('Background Image:', 'attitude');?>
+				</label>
+					<input class="upload1" type="text" id="<?php echo $this->get_field_id( 'promotional_img_background' ); ?>"  name="<?php echo $this->get_field_name('promotional_img_background'); ?>" value="<?php echo esc_url($promotional_img_background); ?>" />
+					<input class="button custom_media_button" name="<?php echo $this->get_field_name('promotional_img_background'); ?>" id="custom_media_button_services" type="button" value="<?php esc_attr_e( 'Upload', 'attitude' ); ?>" onclick="mediaupload.uploader( '<?php echo $this->get_field_id( 'promotional_img_background' ); ?>' ); return false;" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('widget_primary');?>">
+					<?php _e('Primary Promotional:', 'attitude');?>
+				</label>
+				<textarea class="widefat" rows="8" cols="20" id="<?php echo $this->get_field_id('widget_primary');?>" name="<?php echo $this->get_field_name('widget_primary');?>"><?php echo $widget_primary;
+		?></textarea>
+			</p>
+					<?php _e('Secondary Promotional', 'attitude');?>
+				<textarea class="widefat" rows="8" cols="20" id="<?php echo $this->get_field_id('widget_secondary');?>" name="<?php echo $this->get_field_name('widget_secondary');?>"><?php echo $widget_secondary;
+		?></textarea>
+			<p>
+				<label for="<?php echo $this->get_field_id('redirect_text');?>">
+					<?php _e('Redirect Text:', 'attitude');?>
+				</label>
+				<input class="widefat" id="<?php echo $this->get_field_id('redirect_text');?>" name="<?php echo $this->get_field_name('redirect_text');?>" type="text" value="<?php echo esc_attr($redirect_text);?>" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('widget_redirecturl');?>">
+					<?php _e('Redirect Url:', 'attitude');?>
+				</label>
+				<input class="widefat" id="<?php echo $this->get_field_id('widget_redirecturl');?>" name="<?php echo $this->get_field_name('widget_redirecturl');?>" type="text" value="<?php echo $widget_redirecturl;?>" />
+			</p>
+		<?php
 	}
 }
  ?>
